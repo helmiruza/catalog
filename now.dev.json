@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "name": "billplz-catalog",
+  "builds": [{ "src": "next.config.js", "use": "@now/next@canary" }],
+  "routes": [
+    { "src": "/registrations","dest": "/registration" },
+
+    { "src": "/products","dest": "/product?currentPageType=products" },
+    { "src": "/packages","dest": "/product?currentPageType=packages" },
+    { "src": "/events","dest": "/event" },
+
+    { "src": "/dashboard/orders","dest": "/dashboard/order" },
+    { "src": "/dashboard/listings","dest": "/dashboard/listing" }
+  ],
+  "build": {
+    "env": {
+      "BASE_URL": "https://sales-api-staging.clustercubes.com/api",
+      "VERSION": "/v1.0"
+    }
+  }
+}

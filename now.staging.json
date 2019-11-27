@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "name": "billplz-catalog",
+  "builds": [{ "src": "next.config.js", "use": "@now/next@canary" }],
+  "routes": [
+    { "src": "/products","dest": "/product?currentPageType=products" },
+    { "src": "/packages","dest": "/product?currentPageType=packages" },
+
+    { "src": "/dashboard/orders","dest": "/dashboard/order" },
+    { "src": "/dashboard/listings","dest": "/dashboard/listing" },
+    
+    {
+      "src": "^/service-worker.js$",
+      "dest": "/_next/static/service-worker.js",
+      "headers": {
+        "cache-control": "public, max-age=43200, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    }
+  ]
+}
