@@ -22,11 +22,8 @@ import absoluteUrl from 'next-absolute-url'
 import SocialShare from '../../utils/socialShare'
 import ShoppingCart from '../../utils/shoppingCart'
 import AddToCart from '../../components/addToCart'
-
-import ReactPlayer from 'react-player'
-import PauseIcon from '@material-ui/icons/Pause';
+import Media from '../../components/media'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
 
 const useStyles = theme => ({
   main: {
@@ -73,12 +70,6 @@ const useStyles = theme => ({
     [theme.breakpoints.down('sm')]: {
       height: 250,
       border: 'none',
-    }
-  },
-  videoContainer: {
-    height: 400,
-    [theme.breakpoints.down('sm')]: {
-      height: 200,
     }
   },
   sideImages: {
@@ -164,7 +155,8 @@ class EventCatalogue extends React.Component {
   state = {
     quantity: 0,
     product_id: '',
-    currentImage: 'nature'
+    currentMediaId: null,
+    mediaLoading: false
   }
 
   handleChange = (e) => {
@@ -197,8 +189,10 @@ class EventCatalogue extends React.Component {
     this.setState({product_id: '', quantity: 0})
   }
 
-  handleImageClick = (val) => {
-    this.setState({currentImage: val})
+  handleMediaClick = async (val) => {
+    await this.setState({mediaLoading: true})
+    await this.setState({currentMediaId: val})
+    this.setState({mediaLoading: false})
   }
 
   setShareableUrl = () => {
@@ -207,44 +201,60 @@ class EventCatalogue extends React.Component {
     this.setState({shareableUrl: url})
   }
 
-  get renderVideo() {
+  get medias() {
+    return [
+      {id: 4, type: 'video', url: `https://youtu.be/RffHB1xg6YQ`},
+      {id: 1, type: 'image', url: `https://source.unsplash.com/random?nature`},
+      {id: 2, type: 'image', url: `https://source.unsplash.com/random?city`},
+      {id: 3, type: 'image', url: `https://source.unsplash.com/random?night`}
+    ]
+  }
+
+  get currentMedia() {
+    const { currentMediaId } = this.state
+    return this.medias.find(m => m.id === currentMediaId)
+  }
+
+  setCurrentMedia = () => {
+    const { currentMediaId } = this.state
+    const medias = this.medias
+    this.setState({currentMediaId: medias[0].id})
+  }
+
+  renderThumb = (media) => {
     const { classes } = this.props
 
-    return(
-      <React.Fragment>
-        <div className={classes.videoContainer}>
-          <ReactPlayer
-            ref={`player`}
-            url={'https://youtu.be/RffHB1xg6YQ'}
-            playing={true}
-            controls={false}
-            config={{
-              youtube: { playerVars: { showinfo: 0 } }
-            }}
-            onEnded={() => this.setState({stepComplete: true, mediaPlaying: false})}
-            className={classes.reactPlayer}
-            width={'100%'}
-            height={'100%'}
-            onProgress={this.handleProgress}
-            onDuration={this.handleDuration}
-          />
-        </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div>
-            <IconButton onClick={this.handlePlayback}>
-              <PauseIcon />
-            </IconButton>
-            <IconButton onClick={this.handleClickFullscreen}>
-              <FullscreenIcon />
-            </IconButton>
-          </div>
-        </div>
-      </React.Fragment>
-    )
+    switch (media.type) {
+      case 'image':
+        return (
+          <React.Fragment>
+            <div
+              className={classes.sideImage}
+              style={{backgroundImage: `url(${media.url})`}}
+            />
+            <Typography variant="body2" className={classes.viewText} align="center">VIEW</Typography>
+          </React.Fragment>
+        )
+      case 'video':
+        return (
+          <React.Fragment>
+            <div
+              className={classes.sideImage}
+              style={{backgroundImage: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+            >
+              <PlayArrowIcon style={{color: '#fff'}}/>
+            </div>
+            <Typography variant="body2" className={classes.viewText} align="center">PLAY</Typography>
+          </React.Fragment>
+        )
+      default:
+        return null
+    }
   }
 
   componentDidMount() {
     this.setShareableUrl()
+    this.setCurrentMedia()
   }
 
   render () {
@@ -259,13 +269,7 @@ class EventCatalogue extends React.Component {
       {short: 'tw', long: 'Twitter'},
       {short: 'tl', long: 'Telegram'}
     ]
-    const { quantity, product_id, shareableUrl, currentImage } = this.state
-    const images = [
-      'nature',
-      'amanda',
-      'city',
-      'night'
-    ]
+    const { quantity, product_id, shareableUrl, mediaLoading } = this.state
 
     return (
       <Layout
@@ -286,17 +290,13 @@ class EventCatalogue extends React.Component {
                 <Grid container spacing={0}>
                   <Grid item lg={2} xs={2} className={classes.sideImages}>
                     <Grid container spacing={2}>
-                      {images.map(i =>
-                        <Grid key={`image-${i}`} item style={{width: '100%'}}>
+                      {this.medias.map(media =>
+                        <Grid key={`image-${media.id}`} item style={{width: '100%'}}>
                           <div
                             className={classes.sideImageContainer}
-                            onClick={() => this.handleImageClick(i)}
+                            onClick={() => this.handleMediaClick(media.id)}
                           >
-                            <div
-                              className={classes.sideImage}
-                              style={{backgroundImage: `url(https://source.unsplash.com/random?${i})`}}
-                            />
-                            <Typography variant="body2" className={classes.viewText}>VIEW</Typography>
+                            {this.renderThumb(media)}
                           </div>
                         </Grid>
                       )}
@@ -304,24 +304,18 @@ class EventCatalogue extends React.Component {
                   </Grid>
 
                   <Grid item lg={10} xs={12} className={classes.mainImageContainer}>
-                    <div className={classes.mainImage} style={{backgroundImage: 'none'}}>
-                      {this.renderVideo}
-                    </div>
+                    <Media media={this.currentMedia} loading={mediaLoading}/>
                   </Grid>
 
                   <Grid item xs={12} className={classes.horizontalImages}>
                     <Grid container spacing={0}>
-                      {images.map(i =>
-                        <Grid key={`image-xs-${i}`} item style={{width: '100%'}} xs={3}>
+                      {this.medias.map(media =>
+                        <Grid key={`image-xs-${media.id}`} item style={{width: '100%'}} xs={3}>
                           <div
                             className={classes.sideImageContainer}
-                            onClick={() => this.handleImageClick(i)}
+                            onClick={() => this.handleMediaClick(media.id)}
                           >
-                            <div
-                              className={classes.sideImage}
-                              style={{backgroundImage: `url(https://source.unsplash.com/random?${i})`}}
-                            />
-                            <Typography variant="body2" className={classes.viewText}>VIEW</Typography>
+                            {this.renderThumb(media)}
                           </div>
                         </Grid>
                       )}

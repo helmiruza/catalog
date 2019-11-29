@@ -139,8 +139,8 @@ class Home extends React.Component {
       {name: 'Product C', categories: 'category C', price: 500.0, url: '/product/show', imageUrl: 'https://source.unsplash.com/random?beach'},
     ]
     const events = [
-      {name: 'HUMANITARIAN CARE MALAYSIA', categories: 'Donation', price: 400.0, url: '/product/show', imageUrl: 'https://source.unsplash.com/random?kids'},
-      {name: 'HUMANITARIAN CARE MALAYSIA 2', categories: 'Donation', price: 500.0, url: '/product/show', imageUrl: 'https://source.unsplash.com/random?elderly'},
+      {name: 'HUMANITARIAN CARE MALAYSIA', categories: 'Donation', price: 400.0, url: '/event/show', imageUrl: 'https://source.unsplash.com/random?kids'},
+      {name: 'HUMANITARIAN CARE MALAYSIA 2', categories: 'Donation', price: 500.0, url: '/event/show', imageUrl: 'https://source.unsplash.com/random?elderly'},
     ]
 
     const { openAbout } = this.state
