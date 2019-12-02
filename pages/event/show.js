@@ -24,6 +24,7 @@ import ShoppingCart from '../../utils/shoppingCart'
 import CallToAction from '../../components/CallToAction'
 import Media from '../../components/media'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Events from '../../utils/events'
 
 const useStyles = theme => ({
   main: {
@@ -201,24 +202,16 @@ class EventCatalogue extends React.Component {
     this.setState({shareableUrl: url})
   }
 
-  get medias() {
-    return [
-      {id: 4, type: 'video', url: `https://youtu.be/RffHB1xg6YQ`},
-      {id: 1, type: 'image', url: `https://source.unsplash.com/random?nature`},
-      {id: 2, type: 'image', url: `https://source.unsplash.com/random?city`},
-      {id: 3, type: 'image', url: `https://source.unsplash.com/random?night`}
-    ]
-  }
-
   get currentMedia() {
-    const { currentMediaId } = this.state
-    return this.medias.find(m => m.id === currentMediaId)
+    const { currentMediaId, event } = this.state
+    return event
+      ? event.medias.find(m => m.id === currentMediaId)
+      : null
   }
 
   setCurrentMedia = () => {
-    const { currentMediaId } = this.state
-    const medias = this.medias
-    this.setState({currentMediaId: medias[0].id})
+    const { currentMediaId, event } = this.state
+    this.setState({currentMediaId: event.medias[0].id})
   }
 
   renderThumb = (media) => {
@@ -252,34 +245,15 @@ class EventCatalogue extends React.Component {
     }
   }
 
-  get allEvents() {
-    return [
-      {
-        id: 1,
-        categories: ['Donation'],
-        name: 'HUMANITARIAN CARE MALAYSIA',
-        description: 'Ayuh bersama membantu saudara kita yang memerlukan di seluruh dunia. Sumbangan anda amat bermakna bagi mereka. Terima kasih di atas keprihatinan anda.',
-        cta: {
-          buttonText: 'Donate',
-          variants: [
-            {product_id: 1, name: 'RM50'},
-            {product_id: 2, name: 'RM100'},
-            {product_id: 3, name: 'RM200'}
-          ]
-        }
-      }
-    ]
-  }
-
   fetch = async () => {
     const { query } = this.props
-    const event = this.allEvents.find(e => e.id === parseInt(query.id, 10))
-
+    const allEvents = await Events.all()
+    const event = allEvents.find(e => e.id === parseInt(query.id, 10))
     if (event) await this.setState({event})
   }
 
-  componentDidMount() {
-    this.fetch()
+  async componentDidMount() {
+    await this.fetch()
     this.setShareableUrl()
     this.setCurrentMedia()
   }
@@ -313,7 +287,7 @@ class EventCatalogue extends React.Component {
                 <Grid container spacing={0}>
                   <Grid item lg={2} xs={2} className={classes.sideImages}>
                     <Grid container spacing={2}>
-                      {this.medias.map(media =>
+                      {event && event.medias.map(media =>
                         <Grid key={`image-${media.id}`} item style={{width: '100%'}}>
                           <div
                             className={classes.sideImageContainer}
@@ -332,7 +306,7 @@ class EventCatalogue extends React.Component {
 
                   <Grid item xs={12} className={classes.horizontalImages}>
                     <Grid container spacing={0}>
-                      {this.medias.map(media =>
+                      {event && event.medias.map(media =>
                         <Grid key={`image-xs-${media.id}`} item style={{width: '100%'}} xs={3}>
                           <div
                             className={classes.sideImageContainer}

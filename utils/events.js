@@ -1,4 +1,4 @@
-export default class Products {
+export default class Events {
   static all() {
     return [
       {

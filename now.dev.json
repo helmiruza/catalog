@@ -5,8 +5,6 @@
   "routes": [
     { "src": "/registrations","dest": "/registration" },
 
-    { "src": "/products","dest": "/product?currentPageType=products" },
-    { "src": "/packages","dest": "/product?currentPageType=packages" },
     { "src": "/events","dest": "/event" },
     { "src": "/events/(?<id>[^/]+)","dest": "/event/show?id=$id" },
 

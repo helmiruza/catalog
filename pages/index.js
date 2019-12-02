@@ -29,6 +29,8 @@ import AboutPage from '../components/dialogs/about'
 
 import Catalogue from '../components/catalogue'
 
+import Events from '../utils/events'
+
 const useStyles = theme => ({
   main: {
     flexGrow: 1,
@@ -138,11 +140,7 @@ class Home extends React.Component {
       {name: 'Product B', categories: 'category B', price: 500.0, url: '/product/show', imageUrl: 'https://source.unsplash.com/random?sun'},
       {name: 'Product C', categories: 'category C', price: 500.0, url: '/product/show', imageUrl: 'https://source.unsplash.com/random?beach'},
     ]
-    const events = [
-      {name: 'HUMANITARIAN CARE MALAYSIA', categories: 'Donation', price: 400.0, url: '/event/show', imageUrl: 'https://source.unsplash.com/random?kids'},
-      {name: 'HUMANITARIAN CARE MALAYSIA 2', categories: 'Donation', price: 500.0, url: '/event/show', imageUrl: 'https://source.unsplash.com/random?elderly'},
-    ]
-
+    const events = Events.all()
     const { openAbout } = this.state
 
     return (
@@ -172,68 +170,6 @@ class Home extends React.Component {
         <div className={classes.header}>
           <div style={{maxWidth: 1300, margin: 'auto'}}>
             <Typography variant="h6" gutterBottom>
-              PRODUCTS
-            </Typography>
-          </div>
-        </div>
-
-        <div className={clsx(classes.content)}>
-          <Grid container spacing={2} xs={false} className={classes.gridListing}>
-            {products.map(s =>
-              <Grid key={`subs-${s.name}`} item lg={2} xs={6} style={{height: 400}}>
-                <Catalogue
-                  name={s.name}
-                  categories={s.categories}
-                  price={s.price}
-                  url={s.url}
-                  imageUrl={s.imageUrl}
-                />
-              </Grid>
-            )}
-          </Grid>
-
-          <div className={classes.rowListing}>
-            {products.map(s =>
-              <Link href={s.url}>
-                <div className={classes.link} style={{padding: '8px 16px', borderBottom: '1px solid #ededed'}}>
-                  <Grid container spacing={2} style={{alignItems: 'center'}}>
-                    <Grid item xs={3}>
-                      <div style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: '50%',
-                        backgroundImage: `url(${s.imageUrl})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        border: '1px solid #ededed'
-                      }} />
-                    </Grid>
-
-                    <Grid item xs={5}>
-                      <Typography variant="body1" style={{marginBottom: -4, width: '100%', whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'}}>
-                        {s.name.toUpperCase()}
-                      </Typography>
-                      <small>{s.categories}</small>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                      <Typography variant="body1" align="right" style={{fontWeight: 600}}>
-                        {s.price.toFixed(2)}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Link>
-            )}
-          </div>
-        </div>
-
-        <div className={classes.header}>
-          <div style={{maxWidth: 1300, margin: 'auto'}}>
-            <Typography variant="h6" gutterBottom>
               EVENTS
             </Typography>
           </div>
@@ -241,13 +177,13 @@ class Home extends React.Component {
 
         <div className={clsx(classes.content)}>
           <Grid container spacing={2} xs={false} className={classes.gridListing}>
-            {events.map(s =>
+            {events && events.map(s =>
               <Grid key={`subs-${s.name}`} item lg={2} xs={6} style={{height: 400}}>
                 <Catalogue
                   name={s.name}
-                  categories={s.categories}
+                  categories={s.categories.join(', ')}
                   price={s.price}
-                  url={s.url}
+                  url={`/events/${s.id}`}
                   imageUrl={s.imageUrl}
                 />
               </Grid>
@@ -255,8 +191,8 @@ class Home extends React.Component {
           </Grid>
 
           <div className={classes.rowListing}>
-            {events.map(s =>
-              <Link href={s.url}>
+            {events && events.map(s =>
+              <Link as={`/events/${s.id}`} href={`/event/show?id=${s.id}`}>
                 <div className={classes.link} style={{padding: '8px 16px', borderBottom: '1px solid #ededed'}}>
                   <Grid container spacing={2} style={{alignItems: 'center'}}>
                     <Grid item xs={3}>
