@@ -209,7 +209,7 @@ class AppbarPrivate extends React.Component {
                 <Link href="/">
                   <div className={classes.logoContainer}>
                     <img src="/static/images/wolf_logo.png" style={{maxWidth: '100%', maxHeight: '100%'}}/>
-                    <Typography variant="h6" style={{marginLeft: 8, fontWeight: 900, color: 'black'}}>
+                    <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
                       brandx
                     </Typography>
                   </div>
@@ -223,7 +223,7 @@ class AppbarPrivate extends React.Component {
                   ? <Link href="/">
                       <div className={classes.logoContainer}>
                         <img src="/static/images/wolf_logo.png" style={{maxWidth: '100%', maxHeight: '100%'}}/>
-                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 900, color: 'black'}}>
+                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
                           brandx
                         </Typography>
                       </div>
@@ -231,7 +231,7 @@ class AppbarPrivate extends React.Component {
                   : <div className={clsx(classes.logoContainer, classes.fullwidth)}>
                       <div className={clsx(classes.logoContainer, classes.fullwidth)}>
                         <BackButton styles={{margin: '0px 4px'}}/>
-                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 900, color: 'black'}}>
+                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
                           {pageTitle}
                         </Typography>
                       </div>
@@ -249,6 +249,15 @@ class AppbarPrivate extends React.Component {
                   onClick={() => this.handleRedirect('/dashboard', '/dashboard')}
                 >
                   <ListItemText primary="Dashboard" className={classes.listItem} />
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={clsx(classes.listItem, classes.listPadding)}
+                  style={{display: 'flex', alignItems: 'center', height: 64, position: 'relative'}}
+                  onClick={() => this.handleRedirect('/dashboard/orders', '/dashboard/order')}
+                >
+                  <ListItemText primary="Orders" className={classes.listItem} />
                 </ListItem>
               </MenuList>
             </Hidden>

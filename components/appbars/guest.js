@@ -59,7 +59,7 @@ const useStyles = theme => ({
   },
   listItem: {
     display: 'inline',
-    fontWeight: 900
+    fontWeight: 600
   },
   listPadding: {
     margin: '0 auto'
@@ -210,7 +210,7 @@ class AppbarGuest extends React.Component {
                 <Link href="/">
                   <div className={classes.logoContainer}>
                     <img src="/static/images/wolf_logo.png" style={{maxWidth: '100%', maxHeight: '100%'}}/>
-                    <Typography variant="h6" style={{marginLeft: 8, fontWeight: 900, color: 'black'}}>
+                    <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
                       brandx
                     </Typography>
                   </div>
@@ -224,7 +224,7 @@ class AppbarGuest extends React.Component {
                   ? <Link href="/">
                       <div className={classes.logoContainer}>
                         <img src="/static/images/wolf_logo.png" style={{maxWidth: '100%', maxHeight: '100%'}}/>
-                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 900, color: 'black'}}>
+                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
                           brandx
                         </Typography>
                       </div>

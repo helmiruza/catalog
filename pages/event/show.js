@@ -21,7 +21,7 @@ import {
 import absoluteUrl from 'next-absolute-url'
 import SocialShare from '../../utils/socialShare'
 import ShoppingCart from '../../utils/shoppingCart'
-import AddToCart from '../../components/addToCart'
+import CallToAction from '../../components/CallToAction'
 import Media from '../../components/media'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
@@ -252,24 +252,47 @@ class EventCatalogue extends React.Component {
     }
   }
 
+  get allEvents() {
+    return [
+      {
+        id: 1,
+        categories: ['Donation'],
+        name: 'HUMANITARIAN CARE MALAYSIA',
+        description: 'Ayuh bersama membantu saudara kita yang memerlukan di seluruh dunia. Sumbangan anda amat bermakna bagi mereka. Terima kasih di atas keprihatinan anda.',
+        cta: {
+          buttonText: 'Donate',
+          variants: [
+            {product_id: 1, name: 'RM50'},
+            {product_id: 2, name: 'RM100'},
+            {product_id: 3, name: 'RM200'}
+          ]
+        }
+      }
+    ]
+  }
+
+  fetch = async () => {
+    const { query } = this.props
+    const event = this.allEvents.find(e => e.id === parseInt(query.id, 10))
+
+    if (event) await this.setState({event})
+  }
+
   componentDidMount() {
+    this.fetch()
     this.setShareableUrl()
     this.setCurrentMedia()
   }
 
   render () {
     const { classes, subdomain, canonicalUrl, router, ...rest} = this.props
-    const products = [
-      {name: 'Product A', categories: 'category A', price: 400.0},
-      {name: 'Product B', categories: 'category B', price: 500.0}
-    ]
     const shareIcons = [
       {short: 'fb', long: 'Facebook'},
       {short: 'wa', long: 'Whatsapp'},
       {short: 'tw', long: 'Twitter'},
       {short: 'tl', long: 'Telegram'}
     ]
-    const { quantity, product_id, shareableUrl, mediaLoading } = this.state
+    const { quantity, product_id, shareableUrl, mediaLoading, event } = this.state
 
     return (
       <Layout
@@ -333,7 +356,7 @@ class EventCatalogue extends React.Component {
                       </Typography>
 
                       <Typography variant="h6" style={{fontWeight: 900}}>
-                        HUMANITARIAN CARE MALAYSIA
+                        {event ? event.name : '...'}
                       </Typography>
 
                       <Typography>
@@ -346,7 +369,7 @@ class EventCatalogue extends React.Component {
 
                     <div style={{margin: '16px 0'}}>
                       <Typography variant="body2">
-                        Ayuh bersama membantu saudara kita yang memerlukan di seluruh dunia. Sumbangan anda amat bermakna bagi mereka. Terima kasih di atas keprihatinan anda.
+                        {event ? event.description : '...'}
                       </Typography>
                     </div>
 
@@ -372,12 +395,13 @@ class EventCatalogue extends React.Component {
                   </Grid>
 
                   <Grid item lg={5} xs={12} className={classes.addToCart}>
-                    <AddToCart
+                    <CallToAction
                       handleChange={this.handleChange.bind(this)}
                       handleSubmit={this.handleSubmit.bind(this)}
                       handleQuantityChange={this.handleQuantityChange.bind(this)}
                       product_id={product_id}
                       quantity={quantity}
+                      cta={event ? event.cta : null}
                     />
                   </Grid>
                 </Grid>
@@ -386,12 +410,13 @@ class EventCatalogue extends React.Component {
           </div>
 
           <AppBar position="fixed" className={classes.stickyAddToCart}>
-            <AddToCart
+            <CallToAction
               handleChange={this.handleChange.bind(this)}
               handleSubmit={this.handleSubmit.bind(this)}
               handleQuantityChange={this.handleQuantityChange.bind(this)}
               product_id={product_id}
               quantity={quantity}
+              cta={event ? event.cta : null}
             />
           </AppBar>
         </main>

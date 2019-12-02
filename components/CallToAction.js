@@ -136,7 +136,7 @@ const useStyles = theme => ({
   }
 })
 
-class AddToCart extends React.Component {
+class CallToAction extends React.Component {
   handleSubmit = async () => {
     let isValid = false
     isValid = await this.refs.form.isFormValid()
@@ -144,12 +144,12 @@ class AddToCart extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, cta } = this.props
 
     return(
       <div className={clsx(this.props.className, classes.outerBox)}>
         <Typography variant="body2" className={classes.hideTextXs}>
-          ADD TO CART
+          {cta ? cta.buttonText : '...'}
         </Typography>
 
         <div style={{margin: '16px 0'}}>
@@ -175,8 +175,9 @@ class AddToCart extends React.Component {
               InputLabelProps={{ shrink: true }}
             >
               <MenuItem value="">Select Variant</MenuItem>
-              <MenuItem value="a">Variant A</MenuItem>
-              <MenuItem value="b">Variant B</MenuItem>
+              {cta && cta.variants && cta.variants.map(v =>
+                <MenuItem key={`variants-${v.product_id}`} value={v.product_id}>{v.name}</MenuItem>
+              )}
             </SelectValidator>
 
             <div style={{margin: '4px 0'}}>
@@ -223,7 +224,7 @@ class AddToCart extends React.Component {
                     variant="contained"
                     color="primary"
                     type="submit">
-                    Add to Cart
+                    {cta ? cta.buttonText : ''}
                   </Button>
                 </Grid>
               </Grid>
@@ -235,4 +236,4 @@ class AddToCart extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(AddToCart)
+export default withStyles(useStyles)(CallToAction)

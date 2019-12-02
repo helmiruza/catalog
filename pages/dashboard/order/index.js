@@ -176,7 +176,11 @@ class DashboardOrders extends React.Component {
     const { currentImage } = this.state
 
     return (
-      <Layout metaTitle={'Product A'} {...rest}>
+      <Layout
+        metaTitle={'Orders'}
+        pageTitle={'Orders'}
+        {...rest}
+      >
         <main className={classes.main}>
           <div className={classes.appBarSpacer} />
 

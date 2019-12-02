@@ -171,7 +171,7 @@ class Home extends React.Component {
 
         <div className={classes.header}>
           <div style={{maxWidth: 1300, margin: 'auto'}}>
-            <Typography variant="h6" gutterBottom style={{fontWeight: 900}}>
+            <Typography variant="h6" gutterBottom>
               PRODUCTS
             </Typography>
           </div>
@@ -233,7 +233,7 @@ class Home extends React.Component {
 
         <div className={classes.header}>
           <div style={{maxWidth: 1300, margin: 'auto'}}>
-            <Typography variant="h6" gutterBottom style={{fontWeight: 900}}>
+            <Typography variant="h6" gutterBottom>
               EVENTS
             </Typography>
           </div>
