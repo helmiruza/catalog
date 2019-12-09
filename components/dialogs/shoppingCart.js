@@ -7,9 +7,15 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  Typography
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar
 } from '@material-ui/core/'
 import ShoppingCart from '../../utils/shoppingCart'
+import ImageIcon from '@material-ui/icons/Image';
 
 class ShoppingCartDialog extends React.Component {
   state = {
@@ -27,30 +33,40 @@ class ShoppingCartDialog extends React.Component {
   renderCartItems = () => {
     const { cartItems } = this.props
     return(
-      <div>
+      <List>
         {cartItems.length > 0
           ? <React.Fragment>
               {cartItems.map((i,index) =>
-                <div key={`cart-item-${index}`}>
+                <ListItem button key={`order-${index}`}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <ImageIcon />
+                    </Avatar>
+                  </ListItemAvatar>
                   <Grid container spacing={2}>
-                    <Grid item xs={5}>
-                      Product ID: {i.product_id}
+                    <Grid item xs={9}>
+                      <ListItemText
+                        primary={`${i.product_id}`}
+                        secondary={'Helllooo'}
+                        style={{flexGrow: 2}}
+                      />
                     </Grid>
-                    <Grid item xs={3}>
-                      x {i.quantity}
-                    </Grid>
-                    <Grid item xs={4}>
-                      Update
+                    <Grid item xs={3} style={{display: 'flex', alignItems: 'center'}}>
+                      <ListItemText
+                        primary={`x ${i.quantity}`}
+                        secondary={'Edit'}
+                        align="right"
+                      />
                     </Grid>
                   </Grid>
-                </div>
+                </ListItem>
               )}
             </React.Fragment>
-          : <Typography align="center">
+          : <ListItem align="center">
               No items in your cart
-            </Typography>
+            </ListItem>
         }
-      </div>
+      </List>
     )
   }
 

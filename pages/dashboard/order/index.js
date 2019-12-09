@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx'
 import {
   Grid,
   Typography,
@@ -11,20 +12,26 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  ButtonGroup
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'next/router'
 import Layout from '../../../layouts/private'
 import Link from 'next/link'
+import Orders from '../../../utils/orders'
+import FilterListIcon from '@material-ui/icons/FilterList';
+
+import OrderFilterDialog from '../../../components/dialogs/orderFilter'
 
 const useStyles = theme => ({
   main: {
     flexGrow: 1,
-    height: '100vh',
-    [theme.breakpoints.down('sm')]: {
-      padding: '0 16px'
-    }
+    height: '100vh'
   },
   content: {
     overflow: 'auto'
@@ -114,8 +121,18 @@ const useStyles = theme => ({
     }
   },
   tableHeader: {
-    fontSize: 14
-  }
+    fontSize: 14,
+    fontWeight: 600
+  },
+  pageTitle: {
+    fontWeight: 900,
+    marginBottom: 24
+  },
+  hideXs: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
 })
 
 class DashboardOrders extends React.Component {
@@ -124,56 +141,21 @@ class DashboardOrders extends React.Component {
   }
 
   state = {
-    quantity: 0,
-    product_id: '',
-    currentImage: 'nature'
+    filterDialogOpen: false
   }
 
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+  handleFilterDialogOpen = () => {
+    this.setState({filterDialogOpen: true})
   }
 
-  handleQuantityChange = (type) => {
-    const { quantity } = this.state
-    let res = quantity
-
-    if (type === 'add') {
-      res = quantity + 1
-    }
-
-    if (type === 'remove' && quantity > 0) {
-      res = quantity - 1
-    }
-
-    this.setState({quantity: res})
-  }
-
-  handleSubmit = async () => {
-    let isValid = false
-    isValid = await this.refs.form.isFormValid()
-
-    if (isValid) {
-      const { product_id, quantity } = this.state
-      ShoppingCart.add({product_id: product_id, quantity: quantity})
-      this.props.updateCart()
-      this.props.handleNotif({variant: 'success', message: 'Successfully added item to cart'})
-    } else {
-      this.refs.form.submit()
-    }
-  }
-
-  handleReset = () => {
-    this.setState({product_id: '', quantity: 0})
-  }
-
-  handleImageClick = (val) => {
-    this.setState({currentImage: val})
+  handleFilterDialogClose = () => {
+    this.setState({filterDialogOpen: false})
   }
 
   render () {
     const { classes, subdomain, ...rest} = this.props
-    const { quantity, product_id } = this.state
-    const { currentImage } = this.state
+    const { filterDialogOpen } = this.state
+    const orders = Orders.all()
 
     return (
       <Layout
@@ -185,55 +167,58 @@ class DashboardOrders extends React.Component {
           <div className={classes.appBarSpacer} />
 
           <div className={classes.mainContent}>
-            <Typography variant="h6" gutterBottom style={{fontWeight: 900}}>
+            <Typography variant="h6" className={clsx(classes.pageTitle, classes.hideXs)}>
               MY ORDERS
             </Typography>
 
-            <Paper style={{overflow: 'auto'}}>
-              <Table color="primary">
-                <TableHead>
-                  <TableRow className={classes.bgDrawer}>
-                    <TableCell className={classes.tableHeader}>
-                      Order ID
-                    </TableCell>
-                    <TableCell className={classes.tableHeader}>
-                      Status
-                    </TableCell>
-                    <TableCell className={classes.tableHeader}>
-                      Total (RM)
-                    </TableCell>
-                    <TableCell className={classes.tableHeader}>
-                      Created
-                    </TableCell>
-                    <TableCell className={classes.tableHeader}>
-                      Actions
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      Hi
-                    </TableCell>
-                    <TableCell>
-                      Hi
-                    </TableCell>
-                    <TableCell>
-                      Hi
-                    </TableCell>
-                    <TableCell>
-                      Hi
-                    </TableCell>
-                    <TableCell>
-                      Hi
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Paper>
+            <div style={{padding: '0 16px', marginBottom: 8}}>
+              <ButtonGroup fullWidth size="small" color="primary" aria-label="small outlined button group">
+                <Button>To Pack</Button>
+                <Button>Packing</Button>
+                <Button>Delivered</Button>
+              </ButtonGroup>
+            </div>
+
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <Typography variant="body1" style={{padding: '0 16px'}}>
+                RESULTS ({orders.length})
+              </Typography>
+
+              <IconButton color="primary" onClick={() => this.handleFilterDialogOpen()}>
+                <FilterListIcon />
+              </IconButton>
+            </div>
+
+            <List component="nav">
+              {orders.map((order, index) =>
+                <ListItem
+                  button
+                  key={`order-${index}`}
+                  style={{
+                    borderTop: '1px solid #e0e0e0'
+                  }}>
+                  <ListItemText
+                    primary={order.recipient.name}
+                    secondary={order.orderId}
+                    style={{flexGrow: 2}}
+                  />
+                  <ListItemText
+                    primary={order.total.toFixed(2)}
+                    secondary={'Dec 11'}
+                    align="right"
+                  />
+                </ListItem>
+              )}
+            </List>
+
           </div>
 
         </main>
+
+        <OrderFilterDialog
+          open={filterDialogOpen}
+          handleClose={this.handleFilterDialogClose.bind(this)}
+        />
       </Layout>
     )
   }

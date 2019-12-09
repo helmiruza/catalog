@@ -255,7 +255,16 @@ class AppbarPrivate extends React.Component {
                   button
                   className={clsx(classes.listItem, classes.listPadding)}
                   style={{display: 'flex', alignItems: 'center', height: 64, position: 'relative'}}
-                  onClick={() => this.handleRedirect('/dashboard/orders', '/dashboard/order')}
+                  onClick={() => this.handleRedirect('/dashboard/listing', '/dashboard/listing')}
+                >
+                  <ListItemText primary="Listing" className={classes.listItem} />
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={clsx(classes.listItem, classes.listPadding)}
+                  style={{display: 'flex', alignItems: 'center', height: 64, position: 'relative'}}
+                  onClick={() => this.handleRedirect('/dashboard/order', '/dashboard/orders')}
                 >
                   <ListItemText primary="Orders" className={classes.listItem} />
                 </ListItem>

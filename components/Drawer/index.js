@@ -140,17 +140,22 @@ class AppDrawer extends React.Component {
     return (
       <div style={{paddingTop: 8, paddingBottom: 8}}>
         <React.Fragment>
+          <Link href="/">
+            <ListItem button className={classes.drawerList} onClick={() => this.props.handleDrawerClose()}>
+              <ListItemText primary="Home" />
+            </ListItem>
+          </Link>
           <Link href="/dashboard">
             <ListItem button className={classes.drawerList} onClick={() => this.props.handleDrawerClose()}>
               <ListItemText primary="Dashboard" />
             </ListItem>
           </Link>
-          <Link as="/dashboard/listings" href="/dashboard/listing">
+          <Link as="/dashboard/listing" href="/dashboard/listing">
             <ListItem button className={classes.drawerList} onClick={() => this.props.handleDrawerClose()}>
               <ListItemText primary="Listing" />
             </ListItem>
           </Link>
-          <Link as="/dashboard/listings" href="/dashboard/listing">
+          <Link as="/dashboard/orders" href="/dashboard/order">
             <ListItem button className={classes.drawerList} onClick={() => this.props.handleDrawerClose()}>
               <ListItemText primary="Orders" />
             </ListItem>
