@@ -16,6 +16,8 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemAvatar,
+  Avatar,
   IconButton,
   ButtonGroup
 } from '@material-ui/core'
@@ -27,6 +29,7 @@ import Orders from '../../../utils/orders'
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 import OrderFilterDialog from '../../../components/dialogs/orderFilter'
+import Router from 'next/router'
 
 const useStyles = theme => ({
   main: {
@@ -196,7 +199,8 @@ class DashboardOrders extends React.Component {
                   key={`order-${index}`}
                   style={{
                     borderTop: '1px solid #e0e0e0'
-                  }}>
+                  }}
+                  onClick={() => Router.push(`/dashboard/orders/${order.id}`)}>
                   <ListItemText
                     primary={order.recipient.name}
                     secondary={order.orderId}

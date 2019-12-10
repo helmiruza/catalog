@@ -9,7 +9,7 @@
     { "src": "/events/(?<id>[^/]+)","dest": "/event/show?id=$id" },
 
     { "src": "/dashboard/orders","dest": "/dashboard/order" },
-    { "src": "/dashboard/listings","dest": "/dashboard/listing" },
+    { "src": "/dashboard/orders/(?<id>[^/]+)","dest": "/dashboard/order/show?id=$id" },
 
     {
       "src": "^/service-worker.js$",
