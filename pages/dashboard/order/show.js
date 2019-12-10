@@ -207,7 +207,7 @@ class DashboardOrder extends React.Component {
 
             <div style={{paddingLeft: 16, paddingRight: 16, marginTop: 16}}>
               <Typography variant="body1" color="primary">
-                ORDER ITEMS(S)
+                ORDER ITEM(S)
               </Typography>
             </div>
 
@@ -224,8 +224,8 @@ class DashboardOrder extends React.Component {
                   style={{flexGrow: 2}}
                 />
                 <ListItemText
-                  primary={'hello'}
-                  secondary={'Dec 11'}
+                  primary={'RM200.00'}
+                  secondary={'x 1'}
                   align="right"
                 />
               </ListItem>
@@ -242,8 +242,8 @@ class DashboardOrder extends React.Component {
                   style={{flexGrow: 2}}
                 />
                 <ListItemText
-                  primary={'hello'}
-                  secondary={'Dec 11'}
+                  primary={'RM300.00'}
+                  secondary={'x 1'}
                   align="right"
                 />
               </ListItem>
