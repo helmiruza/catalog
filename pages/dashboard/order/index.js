@@ -197,9 +197,7 @@ class DashboardOrders extends React.Component {
                 <ListItem
                   button
                   key={`order-${index}`}
-                  style={{
-                    borderTop: '1px solid #e0e0e0'
-                  }}
+                  style={{borderTop: '1px solid #e0e0e0'}}
                   onClick={() => Router.push(`/dashboard/order/show?id=${order.id}`, `/dashboard/orders/${order.id}`)}>
                   <ListItemText
                     primary={order.recipient.name}

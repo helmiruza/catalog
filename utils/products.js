@@ -9,9 +9,9 @@ export default class Products {
         cta: {
           buttonText: 'Donate',
           variants: [
-            {product_id: 1, name: 'RM50'},
-            {product_id: 2, name: 'RM100'},
-            {product_id: 3, name: 'RM200'}
+            {product_id: 1, name: 'RM50', price: 50.0},
+            {product_id: 2, name: 'RM100', price: 100.0},
+            {product_id: 3, name: 'RM200', price: 200.0}
           ]
         },
         medias: [
@@ -31,9 +31,7 @@ export default class Products {
         cta: {
           buttonText: 'Donate',
           variants: [
-            {product_id: 1, name: 'RM50'},
-            {product_id: 2, name: 'RM100'},
-            {product_id: 3, name: 'RM200'}
+            {product_id: 4, name: 'RM1000', price: 1000.0}
           ]
         },
         medias: [
@@ -43,7 +41,7 @@ export default class Products {
           {id: 3, type: 'image', url: `https://source.unsplash.com/random?night`}
         ],
         imageUrl: 'https://source.unsplash.com/random?elderly',
-        price: 500.0
+        price: 1000.0
       }
     ]
   }

@@ -229,9 +229,9 @@ class AppbarPrivate extends React.Component {
                       </div>
                     </Link>
                   : <div className={clsx(classes.logoContainer, classes.fullwidth)}>
-                      <div className={clsx(classes.logoContainer, classes.fullwidth)}>
+                      <div className={clsx(classes.logoContainer, classes.fullwidth)} style={{maxWidth: 220}}>
                         <BackButton styles={{margin: '0px 4px'}}/>
-                        <Typography variant="h6" style={{marginLeft: 8, fontWeight: 600, color: 'black'}}>
+                        <Typography variant="h6" style={{marginLeft: 8, color: 'black', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}>
                           {pageTitle}
                         </Typography>
                       </div>

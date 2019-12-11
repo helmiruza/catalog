@@ -188,7 +188,7 @@ class DashboardOrder extends React.Component {
 
           <div className={classes.mainContent}>
             <div style={{paddingLeft: 16, paddingRight: 16, marginBottom: 16}}>
-              <Typography variant="body1" color="primary" style={{marginBottom: 16}}>
+              <Typography variant="body1" color="primary" style={{marginBottom: 8}}>
                 RECIPIENT
               </Typography>
 
@@ -211,7 +211,7 @@ class DashboardOrder extends React.Component {
               </Typography>
             </div>
 
-            <List dense component="nav">
+            <List dense component="nav" style={{paddingTop: 0}}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
@@ -252,16 +252,17 @@ class DashboardOrder extends React.Component {
             <Divider />
 
             <div style={{paddingLeft: 16, paddingRight: 16, marginTop: 16}}>
-              <Typography variant="body1" color="primary" style={{marginBottom: 16}}>
+              <Typography variant="body1" color="primary" style={{marginBottom: 8}}>
                 SHIPPING
               </Typography>
 
               {data && data.delivery &&
                 <Grid container spacing={2}>
                   <Grid item xs={8}>
-                    <Typography variant="body1" style={{marginTop: 4}}>
-                      {`${data.delivery.trackingNumber} - ${data.delivery.courier}`}
+                    <Typography variant="body1">
+                      {data.delivery.trackingNumber}
                     </Typography>
+                    <small>{data.delivery.courier}</small>
                   </Grid>
                   <Grid item xs={4}>
                     <Button

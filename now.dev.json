@@ -9,7 +9,8 @@
     { "src": "/events/(?<id>[^/]+)","dest": "/event/show?id=$id" },
 
     { "src": "/dashboard/orders","dest": "/dashboard/order" },
-    { "src": "/dashboard/orders/(?<id>[^/]+)","dest": "/dashboard/order/show?id=$id" }
+    { "src": "/dashboard/orders/(?<id>[^/]+)","dest": "/dashboard/order/show?id=$id" },
+    { "src": "/dashboard/listing/(?<id>[^/]+)","dest": "/dashboard/listing/show?id=$id" }
   ],
   "build": {
     "env": {

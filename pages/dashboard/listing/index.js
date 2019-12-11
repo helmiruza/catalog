@@ -30,6 +30,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import OrderFilterDialog from '../../../components/dialogs/orderFilter'
 import ImageIcon from '@material-ui/icons/Image';
+import Router from 'next/router'
 
 const useStyles = theme => ({
   main: {
@@ -195,10 +196,9 @@ class DashboardListings extends React.Component {
               {listings.map((listing, index) =>
                 <ListItem
                   button
-                  key={`order-${index}`}
-                  style={{
-                    borderTop: '1px solid #e0e0e0'
-                  }}>
+                  key={`listing-${index}`}
+                  style={{borderTop: '1px solid #e0e0e0'}}
+                  onClick={() => Router.push(`/dashboard/listing/show?id=${listing.id}`, `/dashboard/listing/${listing.id}`)}>
                   <ListItemAvatar>
                     <Avatar>
                       <ImageIcon />
@@ -214,7 +214,7 @@ class DashboardListings extends React.Component {
                     </Grid>
                     <Grid item xs={4} style={{display: 'flex', alignItems: 'center'}}>
                       <ListItemText
-                        primary={(100).toFixed(2)}
+                        primary={(listing.price).toFixed(2)}
                         secondary={'Dec 11'}
                         align="right"
                       />
@@ -223,9 +223,7 @@ class DashboardListings extends React.Component {
                 </ListItem>
               )}
             </List>
-
           </div>
-
         </main>
 
         <OrderFilterDialog
