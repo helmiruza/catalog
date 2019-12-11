@@ -163,8 +163,8 @@ class DashboardListings extends React.Component {
 
     return (
       <Layout
-        metaTitle={'My Listings'}
-        pageTitle={'My Listings'}
+        metaTitle={'Listings'}
+        pageTitle={'Listings'}
         {...rest}
       >
         <main className={classes.main}>

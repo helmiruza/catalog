@@ -74,29 +74,32 @@ class SignIn extends React.Component {
   }
 
   handleSubmit = async () => {
-    const { email, password } = this.state
-    const params = { username: email, password: password}
-    let notif = null
-
-    const resp = await ApiReq.post('/auth/login', params)
-      .catch(err => console.log(err.response))
-
-    if (resp.status !== 200) {
-      notif = {variant: 'error', message: `Error: ${resp.status} - ${resp.data}`}
-      this.props.handleNotif(notif)
-    } else {
-      Cookie.set('__clustercubes-sales__', resp.data.token)
-      this.setProfile()
-
-      notif = {variant: 'success', message: 'Authentication success. Redirecting ...'}
-      await this.props.handleNotif(notif)
-
-      if (resp.data.account.status === 'new') {
-        Router.push('/dashboard/onboarding')
-      } else {
-        Router.push('/dashboard')
-      }
-    }
+    // const { email, password } = this.state
+    // const params = { username: email, password: password}
+    // let notif = null
+    // 
+    // const resp = await ApiReq.post('/auth/login', params)
+    //   .catch(err => console.log(err.response))
+    // 
+    // if (resp.status !== 200) {
+    //   notif = {variant: 'error', message: `Error: ${resp.status} - ${resp.data}`}
+    //   this.props.handleNotif(notif)
+    // } else {
+    //   Cookie.set('__clustercubes-sales__', resp.data.token)
+    //   this.setProfile()
+    // 
+    //   notif = {variant: 'success', message: 'Authentication success. Redirecting ...'}
+    //   await this.props.handleNotif(notif)
+    // 
+    //   if (resp.data.account.status === 'new') {
+    //     Router.push('/dashboard/onboarding')
+    //   } else {
+    //     Router.push('/dashboard')
+    //   }
+    // }
+    
+    this.props.handleNotif({variant: 'success', message: 'Successfully signed in ...'})
+    Router.back()
   }
 
   setProfile = async () => {

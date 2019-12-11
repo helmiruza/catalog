@@ -288,7 +288,7 @@ class AppbarGuest extends React.Component {
                 </Badge>
               </IconButton>
 
-              <IconButton style={{color: 'black'}} onClick={() => Router.push('/dashboard')}>
+              <IconButton style={{color: 'black'}} onClick={() => Router.push('/session/new')}>
                 <PersonOutlineIcon />
               </IconButton>
             </div>
