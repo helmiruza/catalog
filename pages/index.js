@@ -1,35 +1,38 @@
 import React from 'react';
 import clsx from 'clsx';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
-import Typography from '@material-ui/core/Typography';
+import {
+  Avatar,
+  Paper,
+  Grid,
+  Fab,
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText
+} from '@material-ui/core/'
+
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Router, { withRouter } from 'next/router'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import ApiReq from '../utils/ApiReq'
 import Cookie from '../utils/cookie'
+import Events from '../utils/events'
 import Layout from '../layouts/guest'
 import Link from 'next/link'
-import Loading from '../components/Loading'
 
 import Domain from '../utils/domain'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import absoluteUrl from 'next-absolute-url'
 
 import BusinessIcon from '@material-ui/icons/Business';
+import ImageIcon from '@material-ui/icons/Image';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+
 import AboutPage from '../components/dialogs/about'
-
 import Catalogue from '../components/catalogue'
+import Loading from '../components/Loading'
 
-import Events from '../utils/events'
 
 const useStyles = theme => ({
   main: {
@@ -191,41 +194,35 @@ class Home extends React.Component {
           </Grid>
 
           <div className={classes.rowListing}>
-            {events && events.map(s =>
-              <Link as={`/events/${s.id}`} href={`/event/show?id=${s.id}`}>
-                <div className={classes.link} style={{padding: '8px 16px', borderBottom: '1px solid #ededed'}}>
-                  <Grid container spacing={2} style={{alignItems: 'center'}}>
-                    <Grid item xs={3}>
-                      <div style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: '50%',
-                        backgroundImage: `url(${s.imageUrl})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        border: '1px solid #ededed'
-                      }} />
+            <List component="nav">
+              {events.map((event, index) =>
+                <ListItem
+                  button
+                  key={`event-${index}`}
+                  style={{borderTop: '1px solid #e0e0e0'}}
+                  onClick={() => Router.push(`/event/show?id=${s.id}`, `/events/${s.id}`)}>
+                  <ListItemAvatar>
+                    <Avatar src={event.imageUrl} />
+                  </ListItemAvatar>
+                  <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                      <ListItemText
+                        primary={event.name}
+                        secondary={event.categories}
+                        style={{flexGrow: 2}}
+                      />
                     </Grid>
-
-                    <Grid item xs={5}>
-                      <Typography variant="body1" style={{marginBottom: -4, width: '100%', whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'}}>
-                        {s.name.toUpperCase()}
-                      </Typography>
-                      <small>{s.categories}</small>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                      <Typography variant="body1" align="right" style={{fontWeight: 600}}>
-                        {s.price.toFixed(2)}
-                      </Typography>
+                    <Grid item xs={4} style={{display: 'flex', alignItems: 'center'}}>
+                      <ListItemText
+                        primary={(event.price).toFixed(2)}
+                        secondary={'Dec 11'}
+                        align="right"
+                      />
                     </Grid>
                   </Grid>
-                </div>
-              </Link>
-            )}
+                </ListItem>
+              )}
+            </List>
           </div>
         </div>
 

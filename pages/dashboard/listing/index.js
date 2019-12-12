@@ -200,9 +200,7 @@ class DashboardListings extends React.Component {
                   style={{borderTop: '1px solid #e0e0e0'}}
                   onClick={() => Router.push(`/dashboard/listing/show?id=${listing.id}`, `/dashboard/listing/${listing.id}`)}>
                   <ListItemAvatar>
-                    <Avatar>
-                      <ImageIcon />
-                    </Avatar>
+                    <Avatar src={listing.imageUrl} />
                   </ListItemAvatar>
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
