@@ -18,7 +18,7 @@
     "clsx": "latest",
     "google-map-react": "^1.1.5",
     "moment": "^2.24.0",
-    "next": "^9.0.5",
+    "next": "^9.3.2",
     "next-absolute-url": "^1.0.2",
     "next-offline": "^4.0.5",
     "next-purgecss": "^3.1.1",
