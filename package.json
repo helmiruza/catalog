@@ -22,7 +22,7 @@
     "next-absolute-url": "^1.0.2",
     "next-offline": "^4.0.5",
     "next-purgecss": "^3.1.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "now-env": "^3.2.0",
     "prop-types": "latest",
     "qs": "^6.8.0",
