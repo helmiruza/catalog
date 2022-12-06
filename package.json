@@ -25,7 +25,7 @@
     "node-sass": "^4.12.0",
     "now-env": "^3.2.0",
     "prop-types": "latest",
-    "qs": "^6.8.0",
+    "qs": "^6.9.7",
     "query-string": "^6.8.2",
     "raven-js": "^3.27.2",
     "react": "^16.9.0",
